@@ -1,6 +1,6 @@
 {
     "name": "masunov/laravel-dto-yml-generator",
-    "description": "sds",
+    "description": "Laravel package for build DTOs and YML definitions for JMS Serializer",
     "type": "library",
     "require": {
         "symfony/yaml": "^4.1"
@@ -14,11 +14,6 @@
     "autoload": {
         "psr-4": {
             "Masunov\\LaravelDtoYmlGenerator\\": "src/"
-        }
-    },
-    "autoload-dev": {
-        "psr-4": {
-            "Masunov\\LaravelDtoYmlGenerator\\Test\\": "tests/"
         }
     },
     "minimum-stability": "stable",
