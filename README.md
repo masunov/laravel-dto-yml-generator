@@ -1,4 +1,4 @@
-#masunov/laravel-dto-yml-generator
+##masunov/laravel-dto-yml-generator
 
 ## Generate DTO
 
