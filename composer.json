@@ -3,7 +3,7 @@
     "description": "sds",
     "type": "library",
     "require": {
-        "jan-swiecki/simple-annotations": "^0.3.1"
+        "symfony/yaml": "^4.1"
     },
     "authors": [
         {
@@ -28,9 +28,5 @@
                 "Masunov\\LaravelDtoYmlGenerator\\LaravelDtoYmlGeneratorServiceProvider"
             ]
         }
-    },
-    "require-dev": {
-        "phpunit/phpunit": "^7.3",
-        "orchestra/testbench": "^3.6"
     }
 }

@@ -6,13 +6,11 @@
  * Time: 20:27
  */
 
-namespace Masunov\PhpLibFilestorage;
+namespace Masunov\LaravelDtoYmlGenerator;
 
-use Doctrine\Common\Annotations\SimpleAnnotationReader;
-use GuzzleHttp\Client;
-use JMS\Serializer\SerializationContext;
-use JMS\Serializer\SerializerBuilder;
 use Illuminate\Support\ServiceProvider;
+use Masunov\LaravelDtoYmlGenerator\Commands\BuildYml;
+use Masunov\LaravelDtoYmlGenerator\Commands\MakeDto;
 
 class LaravelDtoYmlGeneratorServiceProvider extends ServiceProvider
 {
@@ -23,12 +21,7 @@ class LaravelDtoYmlGeneratorServiceProvider extends ServiceProvider
      * @var bool
      */
     protected $defer = false;
-
-    /**
-     * Bootstrap the application events.
-     *
-     * @return void
-     */
+    
     public function boot()
     {
         $this->handleConfigs();
@@ -36,48 +29,20 @@ class LaravelDtoYmlGeneratorServiceProvider extends ServiceProvider
 
     public function register()
     {
-        $this->app->singleton('CloudFileStorageClient', function () {
-            return new StorageClient(new Client());
-        });
-
-        $this->app->singleton(IStorageSerializerInterface::class, function ($app) {
-            $builder           = new SerializerBuilder();
-            $debug             = config('app.debug');
-            $environment       = $app->environment();
-            $serializerBuilder = $builder::create();
-            $apiVersion        = null;
-
-            if ($environment == 'production') {
-                $serializerBuilder->setCacheDir(config('cloudstorage.serializer_cache_dir'));
-            }
-
-            $serializerBuilder->addMetadataDir(config('cloudstorage.serializer_definition_dir'))
-                              ->setAnnotationReader(new SimpleAnnotationReader())
-                              ->setSerializationContextFactory(
-                                  function () use ($apiVersion) {
-                                      $context = SerializationContext::create();
-                                      $context->setSerializeNull(false);
-                                      if (!is_null($apiVersion)) {
-                                          $context->setVersion($apiVersion);
-                                      }
-
-                                      return $context;
-                                  })
-                              ->setDebug($debug)
-                              ->setAnnotationReader(new SimpleAnnotationReader());
-
-            return $serializerBuilder->build();
-        });
-
+        $this->commands(
+            [
+                MakeDto::class,
+                BuildYml::class
+            ]
+        );
     }
 
     private function handleConfigs()
     {
+        $configPath = __DIR__ . '/../config/laravel-dto-yml-generator.php';
 
-        $configPath = __DIR__ . '/../config/cloudstorage.php';
+        $this->publishes([$configPath => config_path('laravel-dto-yml-generator.php')]);
 
-        $this->publishes([$configPath => config_path('ticket_system.php')]);
-
-        $this->mergeConfigFrom($configPath, 'cloudstorage');
+        $this->mergeConfigFrom($configPath, 'laravel-dto-yml-generator');
     }
 }
