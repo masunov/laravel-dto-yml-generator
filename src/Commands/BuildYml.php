@@ -9,10 +9,19 @@ use Masunov\LaravelDtoYmlGenerator\Services\YmlBuilder;
 
 class BuildYml extends Command
 {
-
-
+    /**
+     * @var ClassFinder
+     */
     private $finder;
+
+    /**
+     * @var DtoParser
+     */
     private $dtoParser;
+
+    /**
+     * @var YmlBuilder
+     */
     private $ymlBuilder;
     /**
      * The name and signature of the console command.
@@ -26,12 +35,13 @@ class BuildYml extends Command
      *
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'YML definition builder';
 
     /**
-     * Create a new command instance.
+     * BuildYml constructor.
      *
-     * @return void
+     * @param DtoParser  $dtoParser
+     * @param YmlBuilder $ymlBuilder
      */
     public function __construct(
         DtoParser $dtoParser,
@@ -45,9 +55,7 @@ class BuildYml extends Command
     }
 
     /**
-     * Execute the console command.
-     *
-     * @return mixed
+     * @throws \ReflectionException
      */
     public function handle()
     {
@@ -67,7 +75,6 @@ class BuildYml extends Command
         }
 
         if (null !== $this->option('namespace')) {
-
             $preparedNamespace = str_replace('/', '\\', $this->option('namespace'));
 
             try {
@@ -81,7 +88,6 @@ class BuildYml extends Command
                 $this->error($exception->getMessage());
                 $this->error('Classes not found in namespace ' . $this->option('namespace'));
             }
-
         }
     }
 }

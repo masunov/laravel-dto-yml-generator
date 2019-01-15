@@ -3,6 +3,7 @@
     "description": "Laravel package for build DTOs and YML definitions for JMS Serializer",
     "type": "library",
     "require": {
+        "gears/class-finder": "^1.0",
         "symfony/yaml": "^4.1"
     },
     "authors": [

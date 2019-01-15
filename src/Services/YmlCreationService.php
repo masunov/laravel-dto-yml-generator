@@ -33,12 +33,13 @@ class YmlCreationService
         }
 
         $content = str_replace(
-            'App\BaseClassnameDto', $namespace ?? self::DEFAULT_NAMESPACE . '\\' . $className, $resourseContent
+            'App\BaseClassnameDto',
+            $namespace ?? self::DEFAULT_NAMESPACE . '\\' . $className,
+            $resourseContent
         );
 
         file_put_contents($classPath, $content);
 
         return true;
-
     }
 }

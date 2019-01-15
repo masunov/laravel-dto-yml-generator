@@ -26,7 +26,7 @@ class MakeDto extends Command
     /**
      * @var string
      */
-    protected $description = 'Command description';
+    protected $description = 'Dto builder';
 
     /**
      * MakeDto constructor.
@@ -45,7 +45,6 @@ class MakeDto extends Command
 
     public function handle()
     {
-
         $withYml = $this->option('yml');
 
         $originalClassName = $this->argument('class');

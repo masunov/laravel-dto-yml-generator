@@ -35,6 +35,23 @@ class DtoParser
             $type = str_replace('null', '', $type);
             $type = str_replace('|', '', $type);
 
+            if (stripos($type, '[]') !== false) {
+                $clearClassName  = str_replace('[]', '', $type);
+                if ($reflection->hasUseStatement($clearClassName)) {
+                    $type = 'array<'.$reflection->getUseStatements()[0]['class'].'>';
+                } else {
+                    $explodedNamespace = explode('\\', $reflection->getName());
+                    array_pop($explodedNamespace);
+                    $explodedNamespace[] = $clearClassName;
+                    $implodedNamespace = implode('\\', $explodedNamespace);
+                    $type = 'array<'.$implodedNamespace.'>';
+                }
+            }
+
+            if ($type === '\DateTime') {
+                $type = str_replace('\\', '', $type);
+            }
+
             $props['props'][] = [
                 'name' => $property->getName(),
                 'type' => $type

@@ -22,7 +22,6 @@ class YmlBuilder
         $props = [];
 
         foreach ($params['props'] as $param) {
-
             if (isset($ymlOld['properties'][$param['name']]) && count($ymlOld['properties'][$param['name']]) > 1) {
                 if (isset($ymlOld['properties'][$param['name']])) {
                     $ymlOld['properties'][$param['name']]['type'] = $param['type'];

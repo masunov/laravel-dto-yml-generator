@@ -33,12 +33,15 @@ class DtoCreationService
         $content = str_replace('BaseClassnameDto', $className, $resourseContent);
 
         if (null !== $namespace) {
-            $content = str_replace(self::DEFAULT_NAMESPACE, str_replace('/', '\\', $namespace), $content);
+            $content = str_replace(
+                self::DEFAULT_NAMESPACE,
+                str_replace('/', '\\', $namespace),
+                $content
+            );
         }
 
         file_put_contents($classPath, $content);
 
         return true;
-
     }
 }
