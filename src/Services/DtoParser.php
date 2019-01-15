@@ -12,7 +12,6 @@ use Masunov\LaravelDtoYmlGenerator\ExtendedReflection;
 
 class DtoParser
 {
-
     /**
      * @param string $class
      * @return array

@@ -21,10 +21,9 @@ class DtoCreationService
      */
     public function execute(string $className, string $namespace = null): bool
     {
-
         $resourseContent = file_get_contents(self::BASE_DTO_RESOURSE);
 
-        $classPath = lcfirst($namespace ?? self::DEFAULT_NAMESPACE . '/' . $className) . '.php';
+        $classPath = lcfirst($namespace ?? self::DEFAULT_NAMESPACE) . '/' . $className . '.php';
 
         if (file_exists($classPath)) {
             return false;

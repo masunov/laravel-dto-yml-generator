@@ -21,7 +21,6 @@ class YmlCreationService
      */
     public function execute(string $className, string $namespace = null): bool
     {
-
         $resourseContent = file_get_contents(self::BASE_YML_RESOURSE);
 
         $ymlName = $namespace ?? self::DEFAULT_NAMESPACE . '.' . $className . '.yml';
